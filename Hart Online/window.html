@@ -1,0 +1,102 @@
+﻿<!DOCTYPE html>
+<html lang="en" ng-app="hOnline">
+<head>
+    <meta charset="utf-8">
+    <title>Sandboxed User Interface Content</title>
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+<body class="flex" ng-controller="sensorController">
+<div class="header ">
+    <div class="header-content flex">
+        <div class="header-content-logo">HART ONLINE</div>
+        <div ng-click="showPopup()" class="button" id="connectButton">Connect</div>
+    </div>
+</div>
+<div class="startScreen" ng-show="StartScreen">
+    <div class="startScreen-content">
+        <div class="startScreen-content-header">
+            Choose mode
+        </div>
+        <div class="startScreen-content-buttons">
+            <div class="darkButton" id="demoButton" ng-click="showStartScreen()">Demo</div>
+            <div class="darkButton realModeButton" ng-click="showStartScreen()">Real</div>
+        </div>
+    </div>
+</div>
+<div class="b-popup" ng-show="showPopUp">
+    <div class="b-popup-content">
+        <div class="b-popup-content-header" align="center"> Connect to sensor </div>
+        <select  id="SerialSelect" class="b-popup-content-serialSelect"></select >
+        <!--<button id="sendButton">Send</button>-->
+        <div class="popup-confirmButton darkButton" ng-click="showPopup()" id="ConfirmButton">Connect</div>
+        <div class="popup-closeButton darkButton" ng-click="showPopup()">Close</div>
+    </div>
+</div>
+<div class="flex-body">
+    <div class="sidebar">
+        <ul class="sidebar-tree">
+            <li>
+                <div class="sidebar-tree-header">
+                    <div class="sidebar-tree-header-text" id="sensorText">Sensor:</div>
+                    <a href="" ng-click="showTree()" class="hidebutton"> {{treeStatus}} </a>
+                </div>
+                <div ng-hide="showBlock">
+                    <ul class="sidebar-tree-inserted">
+                        <li ng-repeat="command in sensor.Commands" class="list">
+                            <div class="sidebar-tree-inserted-point secondaryText" ng-click="chooseCommand(command)">
+                                {{displayCommand(command)}}
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+
+    </div>
+
+    <div class="content">
+        <p class="content-header">{{commandName}}</p>
+        <div class="content-errorMessage" id="errorMessage"></div>
+        <div class="content-request">
+            <div class="content-responce-head"><p style="
+                        padding-right: 10px;
+                                " class="secondaryText">Request:  </p> <a href="" class="hidebutton" ng-click="showRequest()">
+                {{requestStatus}}</a>
+            </div>
+            <div  class="content-request-button darkButton" ng-click="messageSender()">Send</div>
+            <form class="content-request-input" ng-hide="hideRequest">
+                <div class="content-repeat" ng-repeat="Command in currentCommand.Request" id="requestInput">
+                    <div class="content-repeat-name">
+                        {{displayVariableName(Command)}}
+                    </div>
+                    <input class="content-repeat-value" type="text" ng-model="sensor.Variables[Command.Item].Value">
+                </div>
+
+            </form>
+        </div>
+
+        <div class="content-responce">
+            <div  class="content-responce-head"><p style="padding-right: 10px;" class="secondaryText">Responce:  </p> <a href="" class="hidebutton" ng-click="showResponce()">
+                {{responceStatus}}</a>
+            </div>
+            <div class="content-responce-output" id="Output" ng-hide="hideResponce">
+                <div class="content-repeat" ng-repeat="Command in currentCommand.Reply">
+                    <div class="content-repeat-name">
+                        {{displayVariableName(Command)}}
+                    </div>
+                    <div class="content-repeat-value">
+                        {{displayVariableValue(Command)}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="js/libraries/angular.min.js"></script>
+<script src="js/UserInterface.js"></script>
+<script src="js/ServerConnection.js"></script>
+<script src="js/SensorConnection.js"></script>
+<script src="js/JSON.js"></script>
+</body>
+</html>

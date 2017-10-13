@@ -1,0 +1,27 @@
+{
+  "manifest_version": 2,
+  "name": "Hart Online",
+  "description": "Connect and configure HART devices",
+  "version": "1.0",
+  "author": "SUSU",
+  "sockets" : {
+    "tcp": {"connect" : "*"}
+  },
+  "app": {
+    "background": {
+      "scripts": ["background.js"]
+    }
+  },
+  "icons": {
+    "64": "img/icon64.png"
+  },
+  "sandbox": {
+    "pages": ["userinterface/main.html", "userinterface/htmlElements/mainContent.html"]
+  },
+  "permissions": [
+    "alarms",
+    "serial",
+    "fullscreen",
+    "http://*/*"
+  ]
+}
